@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>RouteOnTmap</title>
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+		<style>
+			h1 {color:red}
+		</style>
+		<script language="javascript" src="https://apis.skplanetx.com/tmap/js?version=1&format=javascript&appKey=8d0e4cab-2db6-3e2d-9e5b-07b81322735a"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript">
+
+     window.addEventListener('load', function(){
+         alert('실시간 교통정보를 바탕으로 경로를 탐색합니다');
+     });
+
+		var startX = <%=startX%>;
+		var startY = <%=startY%>;
+		var endX = <%=endX%>;
+		var endY = <%=endY%>
+
+		//Tmap객체 생성 및 초기화
+		function initTmap(){
+			centerLL = new Tmap.LonLat(14145677.4, 4511257.6);
+			map = new Tmap.Map({div:'map_div',
+													width:'100%',
+													height:'800px',
+													transitionEffect:"resize",
+													animation:true
+											});
+			searchRoute();
+		};
+		//경로 정보 로드
+		function searchRoute(){
+			var routeFormat = new Tmap.Format.KML({extractStyles:true, extractAttributes:true});
+			var urlStr = "https://apis.skplanetx.com/tmap/routes?version=1&format=xml";
+			urlStr += "&startX="+startX;
+			urlStr += "&startY="+startY;
+			urlStr += "&endX="+endX;
+			urlStr += "&endY="+endY;
+			urlStr += "&appKey=***Tmap API Private Key";
+			var prtcl = new Tmap.Protocol.HTTP({
+																					url: urlStr,
+																					format:routeFormat
+																					});
+			var routeLayer = new Tmap.Layer.Vector("route", {protocol:prtcl, strategies:[new Tmap.Strategy.Fixed()]});
+			routeLayer.events.register("featuresadded", routeLayer, onDrawnFeatures);
+			map.addLayer(routeLayer);
+		}
+		//경로 그리기 후 해당영역으로 줌
+		function onDrawnFeatures(e){
+			map.zoomToExtent(this.getDataExtent());
+		}
+		</script>
+	</head>
+	<body onload="initTmap()">
+		<h1>RouteOnTmap</h1>
+		<div id="map_div"></div>
+		<ul>출발/도착지 정보
+			<li>출발지 : <%= startX%>, <%= startY%></li>
+			<li>도착지 : <%= endX%>, <%= endY%></li>
+		</ul>
+		<input type="button" onclick="JavaScript:window.location.reload()" value="재탐색" />
+	</body>
+	</html>

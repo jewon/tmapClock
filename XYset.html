@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>XYset</title>
+		<meta charset="utf-8" />
+		<style>
+			h1 {color:red}
+		</style>
+	<body>
+		<h1>XYset</h1>
+		Input XY in EPSG:900913 (Google Maps Global Mercator)
+		<form action="xyset" method="post">
+	    <div>
+	        <label for="startX">startX:</label>
+	        <input type="text" id="startX" name="startX"/>
+				</div>
+				<div>
+						<label for="startY">startY:</label>
+						<input type="text" id="startY" name="startY"/>
+				</div>
+				<div>
+						<label for="endX">endX:</label>
+						<input type="text" id="endX" name="endX"/>
+				</div>
+				<div>
+						<label for="endY">endY:</label>
+						<input type="text" id="endY" name="endY"/>
+				</div>
+	    <div class="button">
+	        <button type="submit">submit</button>
+	    </div>
+		</form>
+		To find XY in ESPG:900913
+		<a href="https://epsg.io/map#srs=900913&x=14251033.901267&y=4391651.549374&z=8" target="_blank">Visit Here(epsg.io)</a>
+	</body>
+	</html>
