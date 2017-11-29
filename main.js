@@ -80,10 +80,19 @@ app.post('/xyset', function(req, res){
   endX = req.body.endX;
   endY = req.body.endY;
   console.log('route start/end Changed!')
-  fs.readFile('index.html', function(err, data){ // index.html 로드
-    res.writeHead(200, { 'Content-Type': 'text/html'});
-    res.end(data);
-    })
+  res.redirect('/');
+});
+
+//출발, 도착지 상호변경
+app.post('/xyexchange', function(req, res){
+  var tX = startX;
+  var tY = startY;
+  startX = endX;
+  startY = endY;
+  endX = tX;
+  endY = tY;
+  console.log('route start/end EX-Changed!')
+  res.redirect('/');
 });
 
 var reqtime = 0; // request 횟수 저장
