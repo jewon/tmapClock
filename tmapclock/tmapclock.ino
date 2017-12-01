@@ -47,7 +47,6 @@ void setup() {
   Serial.println("WiFi connected");
 
   digitalWrite(GREEN_LED, LOW);
-
   Serial.print("Requesting URL: ");
 }
 
@@ -70,6 +69,7 @@ void loop() {
           t[i] = payload.charAt(i)-48;
           if(t[i] == -34) break;
           tsize = i;
+          Serial.print(tsize);
         }
       }
   
@@ -82,7 +82,7 @@ void loop() {
       }
       current_time = millis();
       prev_time = current_time;
-  }
+    }
     
     else
     {
@@ -104,7 +104,7 @@ void loop() {
     
       int digitPos = 8;
   
-      for (int i = 0 ; i < tsize-1 ; i++) {
+      for (int i = 0 ; i < tsize ; i++) {
         // Latch 핀을 LOW로 설정해야 Data를 전송할 수 있다.
         digitalWrite(LATCH_pin, LOW);
         // 표시할 문자 정보 전송
