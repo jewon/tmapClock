@@ -49,6 +49,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+//Chart.js HTML script src로 사용 설정
+app.use('/lib', express.static(rootDirectory + "node_modules/chart.js/dist"))
+
 //Web Page Router
 app.listen(port, function(){
   console.log(port,' port listening')
@@ -71,6 +74,12 @@ app.get('/routeOnTmap', function(req, res){
 app.get('/nodeMcu', function(req, res){
   res.set('Content-Type', 'text/plain');
   res.send(200, totalTime/60);
+});
+app.get('/stat', function(req, res){
+      fs.readFile('stat.html', function(err, data){
+        res.writeHead(200, { 'Content-Type' : 'text/html' }); //추후 SQL조회값 렌더
+        res.end(data);
+      })
 });
 
 //출발, 도착지 변경
