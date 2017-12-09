@@ -127,6 +127,7 @@ app.post('/xysettingtodefault', function(req, res){
   endY = 4472551.475751;//디폴트 도착지 : 경희대 국제캠퍼스
   console.log('XY chaged to default')
   resetD();
+  routeJob();
   res.redirect('/')
 });
 
@@ -138,6 +139,7 @@ app.post('/xyset', function(req, res){
   endY = req.body.endY;
   console.log('route start/end Changed!')
   resetD();
+  routeJob();
   res.redirect('/');
 });
 
@@ -151,6 +153,7 @@ app.post('/xyexchange', function(req, res){
   endY = tY;
   console.log('route start/end EX-Changed!')
   resetD();
+  routejob();
   res.redirect('/');
 });
 
