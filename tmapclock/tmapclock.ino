@@ -2,8 +2,8 @@
 #include <ESP8266HTTPClient.h>
 
 // WiFi 셋팅
-const char* ssid = "happyhouse#2";
-const char* password = "happyhouse17";
+const char* ssid = "****ssid";
+const char* password = "****password";
 
 WiFiClient client;
 
@@ -17,8 +17,8 @@ const int GREEN_LED = 13;
 unsigned long current_time = millis();
 unsigned long prev_time = current_time;
 
-int t[4];
-int tsize = 0;
+int t[4] = { 0, 0, 0, 0};
+int tsize = 3;
 String host = "http://jewon.xyz/nodemcu";
 
 void setup() {
@@ -66,8 +66,9 @@ void loop() {
         digitalWrite(RED_LED, LOW);
         for (int i = 0 ; i < 4 ; i++)
         {
-          t[i] = payload.charAt(i)-48;
-          if(t[i] == -34) break;
+          t[i] = payload.charAt(i)-48; // ASCII CODE to Number
+          Serial.print(t[i]);
+          if(t[i] < 0) break;
           tsize = i;
           Serial.print(tsize);
         }
@@ -104,7 +105,7 @@ void loop() {
     
       int digitPos = 8;
   
-      for (int i = 0 ; i < tsize ; i++) {
+      for (int i = 0 ; i < tsize + 1 ; i++) {
         // Latch 핀을 LOW로 설정해야 Data를 전송할 수 있다.
         digitalWrite(LATCH_pin, LOW);
         // 표시할 문자 정보 전송
@@ -112,7 +113,7 @@ void loop() {
         // 자릿수 정보 전송
         shiftOut(DATA_pin, CLOCK_pin, MSBFIRST, digitPos) ;
         digitalWrite(LATCH_pin, HIGH);
-        // 자릿수 값을 첫번째 8로 하고 1비트씩 오늘쪽으로 쉬프트
+        // 1비트씩 오늘쪽으로 쉬프트
         digitPos >>= 1;
         }
       current_time = millis();
