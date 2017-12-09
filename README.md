@@ -17,9 +17,11 @@ PIN Settings
 4 bit LED : SCLK - D3, RCLK - D4, DIO - D2
 Red Led - D8 (sign of Server Request Error), Yellow Led - D7 (sign of Unable to Connet WiFi)
 
+EJS View directory is setted to rootDirectory (Should NOT use Views folder)
+
 + MySQL Table Settings
 
-1. tmapdata
+*tmapdata
 mysql> DESC tmapdata;
 +---------------+-----------+------+-----+-------------------+-------------------+
 | Field         | Type      | Null | Key | Default           | Extra             |
@@ -64,3 +66,4 @@ mysql> select * from hourstable;
 |     7 |     0 |
 |     0 |     0 |
 +-------+-------+
+*

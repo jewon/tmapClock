@@ -30,6 +30,16 @@ var connection = mysql.createConnection({
   database : '***mySQL Table Name'
 });
 
+function resetD(){ //tmapdata 테이블의 모든 데이터 삭제 (경로 바뀔 시 호출됨)
+  connection.query("delete from tmapdata", function(err, rows, fields) {
+    if(err){
+      throw err;
+    } else {
+      console.log("all data deleted by Client")
+    }
+  });
+}
+
 //HTML Render엔진 설정(ejs)
 app.set('views', rootDirectory);
 app.set('view engine', 'ejs');
@@ -90,6 +100,35 @@ app.get('/stat', function(req, res){
       }
   });
 });
+app.get('/settings', function(req, res){ //settings.html (static)
+  fs.readFile('settings.html', function(err, data){
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    res.end(data);
+  })
+});
+
+//저장된 데이터 전체삭제
+app.post('/deleteallroutesdata', function(req, res){
+      connection.query("delete from tmapdata", function(err, rows, fields) {
+        if(err){
+          throw err;
+        } else {
+          console.log("all data deleted by Client")
+          res.redirect('/')
+    }
+  })
+});
+
+//디폴트 출발, 도착지로 변경
+app.post('/xysettingtodefault', function(req, res){
+  startX = 14143439.537091;
+  startY = 4522549.652549;//디폴트 출발지 : 경희대 서울캠퍼스
+  endX = 14146867.260078;
+  endY = 4472551.475751;//디폴트 도착지 : 경희대 국제캠퍼스
+  console.log('XY chaged to default')
+  resetD();
+  res.redirect('/')
+});
 
 //출발, 도착지 변경
 app.post('/xyset', function(req, res){
@@ -98,10 +137,11 @@ app.post('/xyset', function(req, res){
   endX = req.body.endX;
   endY = req.body.endY;
   console.log('route start/end Changed!')
+  resetD();
   res.redirect('/');
 });
 
-//출발, 도착지 상호변경
+//출발, 도착지 맞바꿈 기능
 app.post('/xyexchange', function(req, res){
   var tX = startX;
   var tY = startY;
@@ -110,6 +150,7 @@ app.post('/xyexchange', function(req, res){
   endX = tX;
   endY = tY;
   console.log('route start/end EX-Changed!')
+  resetD();
   res.redirect('/');
 });
 
