@@ -9,7 +9,7 @@ http, request, node-schedule, fs, JSON, express, body-parser, mysql, chart.js
 mysql
 version over 5.7
 
-/tmapclock :
+tmapclock :
 using nodeMCU(ESP8266)
 4-bit-LED Digital Tube using 5 pin, 74LS595 Register
 PIN Setting :
