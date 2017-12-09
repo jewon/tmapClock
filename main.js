@@ -61,7 +61,7 @@ app.listen(port, function(){
   console.log(port,' port listening')
 });
 app.get('/', function(req, res){
-  res.render("index", { totalTime : totalTime/60 })
+  res.render("index", { totalTime : Number((totalTime/60).toFixed(0)) })
 }); //index.ejs (dynamic)
 app.get('/index*', function(req, res){
   res.redirect('/')
