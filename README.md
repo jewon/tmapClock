@@ -16,3 +16,51 @@ using nodeMCU(ESP8266)
 PIN Settings
 4 bit LED : SCLK - D3, RCLK - D4, DIO - D2
 Red Led - D8 (sign of Server Request Error), Yellow Led - D7 (sign of Unable to Connet WiFi)
+
++ MySQL Table Settings
+
+1. tmapdata
+mysql> DESC tmapdata;
++---------------+-----------+------+-----+-------------------+-------------------+
+| Field         | Type      | Null | Key | Default           | Extra             |
++---------------+-----------+------+-----+-------------------+-------------------+
+| SEQ           | int(11)   | NO   | PRI | NULL              | auto_increment    |
+| totalDistance | int(11)   | YES  |     | 0                 |                   |
+| totalTime     | int(11)   | YES  |     | 0                 |                   |
+| totalFare     | int(11)   | YES  |     | 0                 |                   |
+| taxiFare      | int(11)   | YES  |     | 0                 |                   |
+| timestamp     | timestamp | NO   |     | CURRENT_TIMESTAMP |                   |
+| startX        | double    | YES  |     | NULL              |                   |
+| startY        | double    | YES  |     | NULL              |                   |
+| endX          | double    | YES  |     | NULL              |                   |
+| endY          | double    | YES  |     | NULL              |                   |
+| code          | int(11)   | YES  |     | NULL              |                   |
+| days          | int(11)   | YES  |     | NULL              | VIRTUAL GENERATED |
+| hours         | int(11)   | YES  |     | NULL              | VIRTUAL GENERATED |
++---------------+-----------+------+-----+-------------------+-------------------+
+
+days = weekday(timestamp)
+hours = floor(hour(timestamp)/3)
+
+2. hourstable
+mysql> DESC hourstable;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| hours | int(11) | NO   |     | NULL    |       |
+| value | int(11) | YES  |     | 0       |       |
++-------+---------+------+-----+---------+-------+
+
+mysql> select * from hourstable;
++-------+-------+
+| hours | value |
++-------+-------+
+|     1 |     0 |
+|     2 |     0 |
+|     3 |     0 |
+|     4 |     0 |
+|     5 |     0 |
+|     6 |     0 |
+|     7 |     0 |
+|     0 |     0 |
++-------+-------+
