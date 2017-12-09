@@ -43,6 +43,10 @@ connection.query('DESC tmapdata', function(err, rows, fields) {
     console.log('DB Access Error', err);
 });
 
+//stat에서 조회할 SQL 쿼리문
+var ncode = 0; // ncode는 출발-도착지 조합 순서 저장(sql)
+var sqlStatString = "select hourstable.hours, avg(totalTime) as time from tmapdata right outer join hourstable on tmapdata.hours=hourstable.hours group by hours";
+
 //Json, Urlencoded Body 파서 사용 설정
 app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({
@@ -76,10 +80,15 @@ app.get('/nodeMcu', function(req, res){
   res.send(200, totalTime/60);
 });
 app.get('/stat', function(req, res){
-      fs.readFile('stat.html', function(err, data){
-        res.writeHead(200, { 'Content-Type' : 'text/html' }); //추후 SQL조회값 렌더
-        res.end(data);
-      })
+  connection.query(sqlStatString, function(err, rows, fields) {
+  if(err){
+      throw err;
+  } else {
+      console.log("SQL ROWS : ", rows)
+      var n = Object.keys(rows).length -1;
+      res.render("stat", {title : 'data' , totalTime : totalTime/60, rows : rows, size : n});
+      }
+  });
 });
 
 //출발, 도착지 변경
