@@ -23,7 +23,7 @@ EJS View directory is setted to rootDirectory (Should NOT use Views folder)
 
 *tmapdata
 mysql> DESC tmapdata;
-+---------------+-----------+------+-----+-------------------+-------------------+
+"`+---------------+-----------+------+-----+-------------------+-------------------+
 | Field         | Type      | Null | Key | Default           | Extra             |
 +---------------+-----------+------+-----+-------------------+-------------------+
 | SEQ           | int(11)   | NO   | PRI | NULL              | auto_increment    |
@@ -39,22 +39,22 @@ mysql> DESC tmapdata;
 | code          | int(11)   | YES  |     | NULL              |                   |
 | days          | int(11)   | YES  |     | NULL              | VIRTUAL GENERATED |
 | hours         | int(11)   | YES  |     | NULL              | VIRTUAL GENERATED |
-+---------------+-----------+------+-----+-------------------+-------------------+
++---------------+-----------+------+-----+-------------------+-------------------+"`
 
 days = weekday(timestamp)
 hours = floor(hour(timestamp)/3)
 
 2. hourstable
 mysql> DESC hourstable;
-+-------+---------+------+-----+---------+-------+
+"`+-------+---------+------+-----+---------+-------+
 | Field | Type    | Null | Key | Default | Extra |
 +-------+---------+------+-----+---------+-------+
 | hours | int(11) | NO   |     | NULL    |       |
 | value | int(11) | YES  |     | 0       |       |
-+-------+---------+------+-----+---------+-------+
++-------+---------+------+-----+---------+-------+"`
 
 mysql> select * from hourstable;
-+-------+-------+
+"`+-------+-------+
 | hours | value |
 +-------+-------+
 |     1 |     0 |
@@ -65,5 +65,5 @@ mysql> select * from hourstable;
 |     6 |     0 |
 |     7 |     0 |
 |     0 |     0 |
-+-------+-------+
++-------+-------+"`
 *
